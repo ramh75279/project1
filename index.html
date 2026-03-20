@@ -1,23 +1,36 @@
-<input id="inputbox" type="text">
-<button id="btn">add</button>
+<style>
+    .warning {
+        color: red;
+        display: none;
+    }
+</style>
 
-<ul id="container">
-    <li>hello
-        <button onclick="deleteitem(event)">delete</button>
-    </li>
-</ul>
+<div>
+    <textarea id="text" rows="5" cols="30" placeholder="Type here..."></textarea>
+    
+    <p id="counter">0 / 200 characters</p>
+    <p class="warning">Character limit exceeded!</p>
+</div>
 
 <script>
-    var inputbox = document.getElementById("inputbox")
-    var btn = document.getElementById("btn")
-    var container = document.getElementById("container")
+    var textarea = document.getElementById("text")
+    var counter = document.getElementById("counter")
+    var warning = document.querySelector(".warning")
 
-    btn.addEventListener("click",function(){
-        var li = document.createElement("li")
-        li.innerHTML = inputbox.value+"<button onclick="+"deleteitem(event)"+">delete</button>"
-        container.append(li)
+    var maxLength = 200
+
+    textarea.addEventListener("input", function () {
+        var textLength = textarea.value.length
+
+       
+        if (textLength > maxLength) {
+            textarea.value = textarea.value.substring(0, maxLength)
+            warning.style.display = "inline"
+        } else {
+            warning.style.display = "none"
+        }
+
+        
+        counter.textContent = textarea.value.length + " / " + maxLength + " characters"
     })
-    function deleteitem(event){
-        event.target.parentElement.remove()
-    }
 </script>
